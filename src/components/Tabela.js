@@ -22,7 +22,12 @@ const TableBody = ({ content, onremove }) => {
           <td>{livro}</td>
           <td>{preco}</td>
           <td>
-            <button onClick={() => onremove(index)}>Remover</button>
+            <button
+              className="waves-effect waves-light btn blue lighten-2"
+              onClick={() => onremove(index)}
+            >
+              Remover
+            </button>
           </td>
         </tr>
       ))}
@@ -35,7 +40,7 @@ export default class Tabela extends Component {
     const { content, onremove } = this.props; //propriedade implicida que armazena as propriedades co componente
 
     return (
-      <table>
+      <table className="centered highlight">
         <TableHead />
         <TableBody content={content} onremove={onremove} />
       </table>

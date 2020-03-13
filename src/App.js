@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "materialize-css/dist/css/materialize.min.css";
+import "./App.css";
 import Tabela from "./components/Tabela";
 import Form from "./components/Formulario";
+import Header from "./components/Header";
 
 class App extends Component {
   //Sempre o 'state' é alterado, o componente é redesenhado na tela automaticamente
@@ -49,8 +51,11 @@ class App extends Component {
 
   render = () => (
     <>
-      <Tabela content={this.state.autores} onremove={this.removeAutor} />
-      <Form onsubmit={this.adicionaAutor} />
+      <Header />
+      <div className="container mb-10">
+        <Tabela content={this.state.autores} onremove={this.removeAutor} />
+        <Form onsubmit={this.adicionaAutor} />
+      </div>
     </>
   );
 }

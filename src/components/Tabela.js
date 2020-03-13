@@ -13,7 +13,7 @@ const TableHead = () => {
   );
 };
 
-const TableBody = ({ content }) => {
+const TableBody = ({ content, onremove }) => {
   return (
     <tbody>
       {content.map(({ nome, livro, preco }, index) => (
@@ -22,7 +22,7 @@ const TableBody = ({ content }) => {
           <td>{livro}</td>
           <td>{preco}</td>
           <td>
-            <button>Remover</button>
+            <button onClick={() => onremove(index)}>Remover</button>
           </td>
         </tr>
       ))}
@@ -32,12 +32,12 @@ const TableBody = ({ content }) => {
 
 export default class Tabela extends Component {
   render() {
-    const { content } = this.props; //propriedade implicida que armazena as propriedades co componente
+    const { content, onremove } = this.props; //propriedade implicida que armazena as propriedades co componente
 
     return (
       <table>
         <TableHead />
-        <TableBody content={content} />
+        <TableBody content={content} onremove={onremove} />
       </table>
     );
   }

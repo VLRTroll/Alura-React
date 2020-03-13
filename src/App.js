@@ -23,6 +23,11 @@ function App() {
       nome: "Bruno",
       livro: "DevOps",
       preco: "100"
+    },
+    {
+      nome: "Vinicius",
+      livro: "React",
+      preco: "500"
     }
   ];
 

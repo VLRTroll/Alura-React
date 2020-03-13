@@ -16,8 +16,8 @@ const TableHead = () => {
 const TableBody = ({ content }) => {
   return (
     <tbody>
-      {content.map(({ nome, livro, preco }) => (
-        <tr>
+      {content.map(({ nome, livro, preco }, index) => (
+        <tr key={index}>
           <td>{nome}</td>
           <td>{livro}</td>
           <td>{preco}</td>

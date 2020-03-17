@@ -1,22 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import LinkWrapper from '../wrappers/LinkWrapper';
 
 export default function Header() {
 	return (
 		<nav>
 			<div className='nav-wrapper blue lighten-2'>
-				<Link to='/' className='brand-logo'>
+				<LinkWrapper activeStyle={{}} to='/' className='brand-logo'>
 					Logo
-				</Link>
+				</LinkWrapper>
 				<ul className='right'>
 					<li>
-						<Link to='/Autores'>Autores</Link>
+						<LinkWrapper to='/Autores'>Autores</LinkWrapper>
 					</li>
 					<li>
-						<Link to='/Livros'>Livros</Link>
+						<LinkWrapper to='/Livros'>Livros</LinkWrapper>
 					</li>
 					<li>
-						<Link to='/Sobre'>Sobre</Link>
+						<LinkWrapper to='/Sobre'>Sobre</LinkWrapper>
 					</li>
 				</ul>
 			</div>

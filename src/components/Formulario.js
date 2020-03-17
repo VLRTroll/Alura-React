@@ -6,19 +6,28 @@ export default class Formulario extends Component {
 	constructor(props) {
 		super(props);
 		this.validator = new FormValidator({
-			nome: {
-				invalidMessage: 'O campo nome deve ser preenchido!',
-				validation: value => !validator.isEmpty(value)
-			},
-			livro: {
-				invalidMessage: 'O campo livro deve ser preenchido!',
-				validation: value => !validator.isEmpty(value)
-			},
-			preco: {
-				invalidMessage: 'O preço deve ser um valor entre 0.00 e 10000.00!',
-				validation: value =>
-					!validator.isEmpty(value) && value >= 0 && value <= 100000
-			}
+			nome: [
+				{
+					invalidMessage: 'O campo nome deve ser preenchido!',
+					validation: value => !validator.isEmpty(value)
+				}
+			],
+			livro: [
+				{
+					invalidMessage: 'O campo livro deve ser preenchido!',
+					validation: value => !validator.isEmpty(value)
+				}
+			],
+			preco: [
+				{
+					invalidMessage: 'O campo preço deve ser preenchido!',
+					validation: value => !validator.isEmpty(value)
+				},
+				{
+					invalidMessage: 'O preço deve ser um valor entre 0.00 e 10000.00!',
+					validation: value => value >= 0 && value <= 100000
+				}
+			]
 		});
 
 		this.initialState = { nome: '', livro: '', preco: '' };

@@ -3,7 +3,7 @@ import React from 'react';
 // import { Container } from './styles';
 
 const capitalizeFirstLetter = string =>
-	string.charAt(0).toUpperCase() + string.slice(1);
+	string.replace(/\w/, c => c.toUpperCase());
 
 const TableHead = ({ columns }) => {
 	return (

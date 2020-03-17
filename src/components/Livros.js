@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Header from './Header';
 import DataTable from './DataTable';
 import ApiService from '../services/ApiService';
 
 // import { Container } from './styles';
 
-export default function Livros() {
-	const [autores, setAutores] = useState([]);
+export default class Livros extends React.Component {
+	state = { livros: [] };
 
-	useEffect(() => {
+	componentDidMount() {
 		ApiService.ListaLivros().then(livros => {
-			setAutores(livros);
+			this.setState({ livros: [...this.state.livros, ...livros] });
 		});
-	});
+	}
 
-	return (
+	render = () => (
 		<>
 			<Header />
 			<h1>Livros</h1>
-			<DataTable columnOrder={['livro']} content={autores} />
+			<DataTable columnOrder={['livro']} content={this.state.livros} />
 		</>
 	);
 }

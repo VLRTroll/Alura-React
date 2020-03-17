@@ -20,21 +20,25 @@ export default class App extends Component {
 	}
 
 	adicionaAutor = autor => {
-		ApiService.CriaAutor(autor).then(new_autor => {
-			this.setState({ autores: [...this.state.autores, new_autor] });
-			PopUp.show('Autor adicionado com sucesso.');
-		});
+		ApiService.CriaAutor(autor)
+			.then(new_autor => {
+				this.setState({ autores: [...this.state.autores, new_autor] });
+				PopUp.show('Autor adicionado com sucesso.');
+			})
+			.catch(() => PopUp.show('Falha ao tentar criar o autor', false));
 	};
 
 	removeAutor = id => {
-		ApiService.RemoveAutor(id).then(() => {
-			const { autores } = this.state;
-			this.setState({
-				autores: autores.filter(autor => autor.id !== id)
-			});
+		ApiService.RemoveAutor(id)
+			.then(() => {
+				const { autores } = this.state;
+				this.setState({
+					autores: autores.filter(autor => autor.id !== id)
+				});
 
-			PopUp.show('Autor removido com sucesso.', false);
-		});
+				PopUp.show('Autor removido com sucesso.', false);
+			})
+			.catch(() => PopUp.show('Falha ao tentar remover o autor', false));
 	};
 
 	render = () => (

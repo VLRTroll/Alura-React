@@ -6,7 +6,7 @@ import Form from './components/Formulario';
 import Header from './components/Header';
 import PopUp from './components/PopUp';
 
-class App extends Component {
+export default class App extends Component {
 	//Sempre o 'state' é alterado, o componente é redesenhado na tela automaticamente
 	state = {
 		autores: [
@@ -62,5 +62,3 @@ class App extends Component {
 		</>
 	);
 }
-
-export default App;

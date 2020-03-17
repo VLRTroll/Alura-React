@@ -85,7 +85,7 @@ export default class Formulario extends Component {
 					</label>
 					<input
 						id='preco'
-						pattern='[0-9]+\[.,][0-9]+?'
+						type='text'
 						name='preco'
 						className='validate'
 						value={this.state.preco}

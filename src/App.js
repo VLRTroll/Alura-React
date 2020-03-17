@@ -5,51 +5,36 @@ import Tabela from './components/Tabela';
 import Form from './components/Formulario';
 import Header from './components/Header';
 import PopUp from './components/PopUp';
+import ApiService from './services/ApiService';
 
 export default class App extends Component {
-	//Sempre o 'state' é alterado, o componente é redesenhado na tela automaticamente
-	state = {
-		autores: [
-			{
-				nome: 'Paulo',
-				livro: 'React',
-				preco: '1002'
-			},
-			{
-				nome: 'Daniel',
-				livro: 'Java',
-				preco: '99'
-			},
-			{
-				nome: 'Marcos',
-				livro: 'Design',
-				preco: '150'
-			},
-			{
-				nome: 'Bruno',
-				livro: 'DevOps',
-				preco: '100'
-			},
-			{
-				nome: 'Vinicius',
-				livro: 'React',
-				preco: '500'
-			}
-		]
-	};
+	constructor(props) {
+		super(props);
+		this.state = { autores: [] };
+	}
+
+	componentDidMount() {
+		ApiService.ListaAutores().then(autores =>
+			this.setState({ autores: [...this.state.autores, ...autores] })
+		);
+	}
 
 	adicionaAutor = autor => {
-		this.setState({ autores: [...this.state.autores, autor] });
-		PopUp.show('Autor adicionado com sucesso.');
+		ApiService.CriaAutor(autor).then(new_autor => {
+			this.setState({ autores: [...this.state.autores, new_autor] });
+			PopUp.show('Autor adicionado com sucesso.');
+		});
 	};
 
-	removeAutor = index => {
-		const { autores } = this.state;
+	removeAutor = id => {
+		ApiService.RemoveAutor(id).then(() => {
+			const { autores } = this.state;
+			this.setState({
+				autores: autores.filter(autor => autor.id !== id)
+			});
 
-		this.setState({
-			autores: autores.filter((_, i) => index !== i)
+			PopUp.show('Autor removido com sucesso.', false);
 		});
-		PopUp.show('Autor removido com sucesso.', false);
 	};
 
 	render = () => (

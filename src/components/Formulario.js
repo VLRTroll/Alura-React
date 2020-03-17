@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import FormValidator from '../validations/FormValidator';
+import validator from 'validator';
 
 export default class Formulario extends Component {
 	constructor(props) {
 		super(props);
 		this.validator = new FormValidator({
-			method: 'isEmpty',
-			field: 'nome'
+			nome: {
+				invalidMessage: 'O campo nome deve ser preenchido!',
+				validation: value => !validator.isEmpty(value)
+			},
+			livro: {
+				invalidMessage: 'O campo livro deve ser preenchido!',
+				validation: value => !validator.isEmpty(value)
+			},
+			preco: {
+				invalidMessage: 'O preço deve ser um valor entre 0.00 e 10000.00!',
+				validation: value =>
+					!validator.isEmpty(value) && value >= 0 && value <= 100000
+			}
 		});
 
 		this.initialState = { nome: '', livro: '', preco: '' };
@@ -24,8 +36,6 @@ export default class Formulario extends Component {
 		if (this.validator.validate(this.state)) {
 			this.props.onsubmit(this.state);
 			this.setState(this.initialState);
-		} else {
-			console.log('Submit recusado');
 		}
 	};
 
@@ -66,7 +76,7 @@ export default class Formulario extends Component {
 					</label>
 					<input
 						id='preco'
-						type='number'
+						pattern='[0-9]+\[.,][0-9]+?'
 						name='preco'
 						className='validate'
 						value={this.state.preco}

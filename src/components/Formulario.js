@@ -1,34 +1,10 @@
 import React, { Component } from 'react';
-import FormValidator from '../validations/FormValidator';
-import validator from 'validator';
+import Validator from '../validations/Validator';
+import FormConstraints from '../validations/FormValidator';
 
 export default class Formulario extends Component {
 	constructor(props) {
 		super(props);
-		this.validator = new FormValidator({
-			nome: [
-				{
-					invalidMessage: 'O campo nome deve ser preenchido!',
-					validation: value => !validator.isEmpty(value)
-				}
-			],
-			livro: [
-				{
-					invalidMessage: 'O campo livro deve ser preenchido!',
-					validation: value => !validator.isEmpty(value)
-				}
-			],
-			preco: [
-				{
-					invalidMessage: 'O campo preço deve ser preenchido!',
-					validation: value => !validator.isEmpty(value)
-				},
-				{
-					invalidMessage: 'O preço deve ser um valor entre 0.00 e 10000.00!',
-					validation: value => value >= 0 && value <= 100000
-				}
-			]
-		});
 
 		this.initialState = { nome: '', livro: '', preco: '' };
 		this.state = this.initialState;
@@ -42,7 +18,7 @@ export default class Formulario extends Component {
 	handleSubmit = event => {
 		event.preventDefault(); //bloqueia o recarregamento da página
 
-		if (this.validator.validate(this.state)) {
+		if (Validator.isValid(this.state, FormConstraints)) {
 			this.props.onsubmit(this.state);
 			this.setState(this.initialState);
 		}

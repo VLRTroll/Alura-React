@@ -1,20 +1,27 @@
-import PopUp from '../components/PopUp';
+import validator from 'validator';
 
-export default class FormValidator {
-	constructor(validation) {
-		this.validation = validation;
-	}
-
-	validate(state) {
-		const results = Object.entries(this.validation).map(([field, rules]) =>
-			rules.reduce((response, rule) => {
-				const isValid = rule.validation(state[field]);
-				if (!isValid) PopUp.show(rule.invalidMessage, false);
-
-				return response && isValid;
-			}, true)
-		);
-
-		return results.every(r => r);
-	}
-}
+const FormConstraints = {
+	nome: [
+		{
+			invalidMessage: 'O campo nome deve ser preenchido!',
+			validation: value => !validator.isEmpty(value)
+		}
+	],
+	livro: [
+		{
+			invalidMessage: 'O campo livro deve ser preenchido!',
+			validation: value => !validator.isEmpty(value)
+		}
+	],
+	preco: [
+		{
+			invalidMessage: 'O campo preço deve ser preenchido!',
+			validation: value => !validator.isEmpty(value)
+		},
+		{
+			invalidMessage: 'O preço deve ser um valor entre 0.00 e 10000.00!',
+			validation: value => value >= 0 && value <= 100000
+		}
+	]
+};
+export default FormConstraints;

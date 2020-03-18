@@ -1,15 +1,12 @@
-const checkError = async (response, expected_status) => {
-	const data = await response.json();
-	if (response.ok && data.message === expected_status) {
-		return data;
-	}
+const checkError = response => {
+	if (response.ok) return response.json();
 	throw new Error(response.responseText);
 };
 
 const ApiService = {
 	ListaAutores: () =>
 		fetch('http://localhost:8000/api/autor')
-			.then(async response => await checkError(response, 'success'))
+			.then(async response => checkError(response))
 			.then(json => json.data),
 
 	CriaAutor: autor => {
@@ -18,7 +15,7 @@ const ApiService = {
 			headers: { 'content-type': 'application/json' },
 			body: JSON.stringify(autor)
 		})
-			.then(async response => await checkError(response, 'success'))
+			.then(async response => checkError(response))
 			.then(json => json.data);
 	},
 
@@ -26,16 +23,16 @@ const ApiService = {
 		fetch(`http://localhost:8000/api/autor/${id}`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' }
-		}).then(async response => await checkError(response, 'deleted')),
+		}).then(async response => checkError(response)),
 
 	ListaNomes: () =>
 		fetch('http://localhost:8000/api/autor/nome')
-			.then(async response => await checkError(response, 'success'))
+			.then(async response => checkError(response))
 			.then(json => json.data),
 
 	ListaLivros: () =>
 		fetch('http://localhost:8000/api/autor/livro')
-			.then(async response => await checkError(response, 'success'))
+			.then(async response => checkError(response))
 			.then(json => json.data)
 };
 export default ApiService;

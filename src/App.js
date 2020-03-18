@@ -25,7 +25,7 @@ export default class App extends Component {
 				this.setState({ autores: [...this.state.autores, new_autor] });
 				PopUp.show('Autor adicionado com sucesso.');
 			})
-			.catch(() => PopUp.show('Falha ao tentar criar o autor', false));
+			.catch(() => PopUp.show('Falha ao criar o autor', false));
 	};
 
 	removeAutor = id => {
@@ -38,7 +38,7 @@ export default class App extends Component {
 
 				PopUp.show('Autor removido com sucesso.', false);
 			})
-			.catch(() => PopUp.show('Falha ao tentar remover o autor', false));
+			.catch(() => PopUp.show('Falha ao remover o autor', false));
 	};
 
 	render = () => (

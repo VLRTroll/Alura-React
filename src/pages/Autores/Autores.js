@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from './Header';
-import DataTable from './DataTable';
-import ApiService from '../services/ApiService';
-import PopUp from './PopUp';
+import Header from '../../components/Header';
+import DataTable from '../../components/DataTable';
+import ApiService from '../../services/ApiService';
+import PopUp from '../../components/PopUp';
 
 // import { Container } from './styles';
 

@@ -9,15 +9,14 @@ const ApiService = {
 			.then(async response => checkError(response))
 			.then(json => json.data),
 
-	CriaAutor: autor => {
-		return fetch('http://localhost:8000/api/autor', {
+	CriaAutor: autor =>
+		fetch('http://localhost:8000/api/autor', {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
 			body: JSON.stringify(autor)
 		})
 			.then(async response => checkError(response))
-			.then(json => json.data);
-	},
+			.then(json => json.data),
 
 	RemoveAutor: id =>
 		fetch(`http://localhost:8000/api/autor/${id}`, {

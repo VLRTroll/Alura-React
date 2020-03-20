@@ -1,43 +1,46 @@
-import React, { Component } from 'react';
+import React, { useRef } from 'react';
 import Validator from '../validations/Validator';
 import FormConstraints from '../validations/FormValidator';
 
-export default class Formulario extends Component {
-	constructor(props) {
-		super(props);
+export default function Formulario({ onsubmit }) {
+	const input_nome = useRef('');
+	const input_livro = useRef('');
+	const input_preco = useRef('');
 
-		this.initialState = { nome: '', livro: '', preco: '' };
-		this.state = this.initialState;
-	}
-
-	handleInputChange = event => {
-		const { name, value } = event.target;
-		this.setState({ [name]: value });
+	const resetForm = () => {
+		input_nome.current.value = '';
+		input_livro.current.value = '';
+		input_preco.current.value = '';
+		input_nome.current.focus();
 	};
 
-	handleSubmit = event => {
-		event.preventDefault(); //bloqueia o recarregamento da página
+	const handleSubmit = event => {
+		event.preventDefault();
 
-		if (Validator.isValid(this.state, FormConstraints)) {
-			this.props.onsubmit(this.state);
-			this.setState(this.initialState);
+		const state = {
+			nome: input_nome.current.value,
+			livro: input_livro.current.value,
+			preco: input_preco.current.value
+		};
+
+		if (Validator.isValid(state, FormConstraints)) {
+			onsubmit(state);
+			resetForm();
 		}
 	};
 
-	render = () => (
-		<form onSubmit={this.handleSubmit}>
+	return (
+		<form onSubmit={handleSubmit}>
 			<div className='row'>
 				<div className='input-field col s4'>
 					<label className='input-field' htmlFor='nome'>
 						Nome
 					</label>
 					<input
-						id='nome'
+						ref={input_nome}
 						type='text'
 						name='nome'
 						className='validate'
-						value={this.state.nome}
-						onChange={this.handleInputChange}
 					/>
 				</div>
 
@@ -46,12 +49,10 @@ export default class Formulario extends Component {
 						Livro
 					</label>
 					<input
-						id='livro'
+						ref={input_livro}
 						type='text'
 						name='livro'
 						className='validate'
-						value={this.state.livro}
-						onChange={this.handleInputChange}
 					/>
 				</div>
 
@@ -60,12 +61,10 @@ export default class Formulario extends Component {
 						Preço
 					</label>
 					<input
-						id='preco'
-						type='text'
+						ref={input_preco}
+						type='number'
 						name='preco'
 						className='validate'
-						value={this.state.preco}
-						onChange={this.handleInputChange}
 					/>
 				</div>
 			</div>

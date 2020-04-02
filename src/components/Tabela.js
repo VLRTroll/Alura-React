@@ -16,9 +16,10 @@ export default function Tabela(props) {
           {columns.map(({ title }) => (
             <TableCell key={title}>{title}</TableCell>
           ))}
-          <RemoveCell title removeCb={onremove} />
+          <RemoveTitle removeCb={onremove} />
         </TableRow>
       </TableHead>
+
       <TableBody>
         {content.map(item => (
           <TableRow key={item.id}>
@@ -34,19 +35,19 @@ export default function Tabela(props) {
   );
 }
 
-const RemoveCell = ({ title, removeCb, content_id }) =>
-  (removeCb &&
-    (title ? (
-      <TableCell>Remover</TableCell>
-    ) : (
-      <TableCell>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => removeCb(content_id)}
-        >
-          Remover
-        </Button>
-      </TableCell>
-    ))) ||
+const RemoveTitle = ({ removeCb }) =>
+  (removeCb && <TableCell>Remover</TableCell>) || null;
+
+const RemoveCell = ({ removeCb, content_id }) =>
+  (removeCb && (
+    <TableCell>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => removeCb(content_id)}
+      >
+        Remover
+      </Button>
+    </TableCell>
+  )) ||
   null;

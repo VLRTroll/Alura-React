@@ -1,27 +1,28 @@
-import React from 'react';
-import Header from '../../components/Header';
-import DataTable from '../../components/DataTable';
-import ApiService from '../../services/ApiService';
-import PopUp from '../../components/PopUp';
+import React, { useState, useEffect } from "react";
+import Header from "../../components/Header";
+import ApiService from "../../services/ApiService";
+import PopUp from "../../components/PopUp";
+import Tabela from "../../components/Tabela";
 
-// import { Container } from './styles';
+export default function Autores() {
+  const [nomes, setNomes] = useState([]);
+  const columns = [{ title: "Nome", prop: "nome" }];
 
-export default class Autores extends React.Component {
-	state = { nomes: [] };
+  const getNomes = () => {
+    ApiService.ListaNomes()
+      .then(response => {
+        setNomes([...nomes, ...response]);
+      })
+      .catch(() => PopUp.show("Falha ao carregar lista de autores.", false));
+  };
 
-	componentDidMount() {
-		ApiService.ListaNomes()
-			.then(nomes => {
-				this.setState({ nomes: [...this.state.nomes, ...nomes] });
-			})
-			.catch(() => PopUp.show('Falha ao carregar lista de autores.', false));
-	}
+  useEffect(getNomes, []);
 
-	render = () => (
-		<>
-			<Header />
-			<h1>Autores</h1>
-			<DataTable columnOrder={['nome']} content={this.state.nomes} />
-		</>
-	);
+  return (
+    <>
+      <Header />
+      <h1>Autores</h1>
+      <Tabela columns={columns} content={nomes} />
+    </>
+  );
 }

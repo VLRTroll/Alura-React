@@ -35,17 +35,18 @@ export default function Tabela(props) {
 }
 
 const RemoveCell = ({ title, removeCb, content_id }) =>
-  removeCb &&
-  (title ? (
-    <TableCell>Remover</TableCell>
-  ) : (
-    <TableCell>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => removeCb(content_id)}
-      >
-        Remover
-      </Button>
-    </TableCell>
-  ));
+  (removeCb &&
+    (title ? (
+      <TableCell>Remover</TableCell>
+    ) : (
+      <TableCell>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => removeCb(content_id)}
+        >
+          Remover
+        </Button>
+      </TableCell>
+    ))) ||
+  null;

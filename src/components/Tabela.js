@@ -1,49 +1,51 @@
-import React, { Component } from 'react';
+import React from "react";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import { Button } from "@material-ui/core";
 
-const TableHead = () => {
-	return (
-		<thead>
-			<tr>
-				<th>Autores</th>
-				<th>Livros</th>
-				<th>Preços</th>
-				<th>Remover</th>
-			</tr>
-		</thead>
-	);
-};
+export default function Tabela(props) {
+  const { columns, content, onremove } = props; //propriedade implicida que armazena as propriedades co componente
 
-const TableBody = ({ content, onremove }) => {
-	return (
-		<tbody>
-			{content.map(({ id, nome, livro, preco }) => (
-				<tr key={id}>
-					<td>{nome}</td>
-					<td>{livro}</td>
-					<td>{preco}</td>
-					<td>
-						<button
-							className='waves-effect waves-light btn blue lighten-2'
-							onClick={() => onremove(id)}
-						>
-							Remover
-						</button>
-					</td>
-				</tr>
-			))}
-		</tbody>
-	);
-};
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          {columns.map(({ title }) => (
+            <TableCell key={title}>{title}</TableCell>
+          ))}
+          <RemoveCell title removeCb={onremove} />
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {content.map(item => (
+          <TableRow key={item.id}>
+            {columns.map(({ prop }, index) => (
+              <TableCell key={index}>{item[prop]}</TableCell>
+            ))}
 
-export default class Tabela extends Component {
-	render() {
-		const { content, onremove } = this.props; //propriedade implicida que armazena as propriedades co componente
-
-		return (
-			<table className='centered highlight'>
-				<TableHead />
-				<TableBody content={content} onremove={onremove} />
-			</table>
-		);
-	}
+            <RemoveCell content_id={item.id} removeCb={onremove} />
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
 }
+
+const RemoveCell = ({ title, removeCb, content_id }) =>
+  removeCb &&
+  (title ? (
+    <TableCell>Remover</TableCell>
+  ) : (
+    <TableCell>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => removeCb(content_id)}
+      >
+        Remover
+      </Button>
+    </TableCell>
+  ));

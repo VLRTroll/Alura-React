@@ -6,6 +6,7 @@ import Form from "../../components/Formulario";
 import Header from "../../components/Header";
 import PopUp from "../../components/PopUp";
 import ApiService from "../../services/ApiService";
+import { Typography } from "@material-ui/core";
 
 export default class Home extends Component {
   constructor(props) {
@@ -51,13 +52,19 @@ export default class Home extends Component {
     return (
       <>
         <Header />
+
         <div className="container mb-10">
+          <Typography component="h1" variant="h1">
+            Casa do Código
+          </Typography>
+
+          <Form onsubmit={this.adicionaAutor} />
+
           <Tabela
             columns={columns}
             content={this.state.autores}
             onremove={this.removeAutor}
           />
-          <Form onsubmit={this.adicionaAutor} />
         </div>
       </>
     );
